@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome to Travel Agency</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2ecc71;
+      --dark-color: #2c3e50;
+      --light-color: #ecf0f1;
+      --accent-color: #e74c3c;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .navbar {
+      background: linear-gradient(135deg, var(--dark-color), #1a252f) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--light-color) !important;
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      margin: 0 5px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .hero-section {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 100px 0;
+      margin-bottom: 50px;
+      border-radius: 0 0 20px 20px;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .btn-primary:hover {
+      background-color: #2980b9;
+      border-color: #2980b9;
+    }
+    
+    .btn-success {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+    
+    .btn-success:hover {
+      background-color: #27ae60;
+      border-color: #27ae60;
+    }
+    
+    .btn-warning {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+      color: white;
+    }
+    
+    .btn-warning:hover {
+      background-color: #c0392b;
+      border-color: #c0392b;
+      color: white;
+    }
+    
+    .feature-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+    
+    footer {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 20px 0;
+      margin-top: auto;
+      text-align: center;
+    }
+    
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 60px 0;
+      border-radius: 20px;
+      margin: 50px 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .testimonial-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 20px;
+    }
+    
+    .testimonial-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid var(--primary-color);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <i class="fas fa-plane me-2"></i>Travel Agency
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <% if (user) { %>
+            <!-- Visible to all logged-in users -->
+            <li class="nav-item">
+              <a class="nav-link" href="/packages"><i class="fas fa-suitcase me-1"></i> Packages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/destinations"><i class="fas fa-map-marked-alt me-1"></i> Destinations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/customers"><i class="fas fa-users me-1"></i> Customers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/bookings"><i class="fas fa-calendar-check me-1"></i> Bookings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/payments"><i class="fas fa-credit-card me-1"></i> Payments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/reviews"><i class="fas fa-star me-1"></i> Reviews</a>
+            </li>
+
+            <!-- Logout link for all logged in users -->
+            <li class="nav-item">
+              <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt me-1"></i> Logout</a>
+            </li>
+
+          <% } else { %>
+            <!-- For guests -->
+            <li class="nav-item">
+              <a class="nav-link" href="/register"><i class="fas fa-user-plus me-1"></i> Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt me-1"></i> Login</a>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container text-center">
+      <h1 class="display-3 fw-bold mb-4">Discover Your Next Adventure</h1>
+      <p class="lead mb-5">Explore the most beautiful destinations around the world with our expertly crafted travel experiences</p>
+      
+      <% if (!user) { %>
+        <a href="/register" class="btn btn-primary btn-lg px-4 me-3">
+          <i class="fas fa-user-plus me-2"></i>Get Started
+        </a>
+        <a href="/login" class="btn btn-outline-light btn-lg px-4">
+          <i class="fas fa-sign-in-alt me-2"></i>Login
+        </a>
+      <% } else if (user.role === 'admin') { %>
+        <a href="/list" class="btn btn-warning btn-lg px-4 me-3">
+          <i class="fas fa-cogs me-2"></i>Manage Destinations
+        </a>
+      <% } else { %>
+        <a href="/shopping" class="btn btn-success btn-lg px-4">
+          <i class="fas fa-globe-americas me-2"></i>Browse Destinations
+        </a>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <div class="container mb-5">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="fw-bold">Why Choose Us?</h2>
+        <p class="lead text-muted">We provide the best travel experiences tailored just for you</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="feature-card p-4 text-center">
+          <div class="feature-icon">
+            <i class="fas fa-globe"></i>
+          </div>
+          <h4>100+ Destinations</h4>
+          <p class="text-muted">Explore our wide selection of destinations across all continents.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card p-4 text-center">
+          <div class="feature-icon">
+            <i class="fas fa-hand-holding-usd"></i>
+          </div>
+          <h4>Best Prices</h4>
+          <p class="text-muted">We guarantee the best prices with our price match policy.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card p-4 text-center">
+          <div class="feature-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h4>24/7 Support</h4>
+          <p class="text-muted">Our travel experts are available around the clock to assist you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials Section -->
+  <div class="container mb-5">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="fw-bold">What Our Travelers Say</h2>
+        <p class="lead text-muted">Hear from our satisfied customers</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="testimonial-card text-center">
+          <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Testimonial" class="testimonial-img">
+          <h5>Sarah Johnson</h5>
+          <p class="text-muted">"The trip to Bali was perfectly organized. Everything went smoothly!"</p>
+          <div class="text-warning">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testimonial-card text-center">
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Testimonial" class="testimonial-img">
+          <h5>Michael Chen</h5>
+          <p class="text-muted">"Amazing European tour package. Will definitely book again!"</p>
+          <div class="text-warning">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testimonial-card text-center">
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Testimonial" class="testimonial-img">
+          <h5>Emily Rodriguez</h5>
+          <p class="text-muted">"The customer service is exceptional. They really care about your experience."</p>
+          <div class="text-warning">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action Section -->
+  <div class="container">
+    <div class="cta-section text-center">
+      <h2 class="display-5 fw-bold mb-4">Ready for Your Next Adventure?</h2>
+      <p class="lead mb-5">Join thousands of happy travelers who have explored the world with us</p>
+      <% if (!user) { %>
+        <a href="/register" class="btn btn-light btn-lg px-4 me-3">
+          <i class="fas fa-user-plus me-2"></i>Sign Up Now
+        </a>
+        <a href="/login" class="btn btn-outline-light btn-lg px-4">
+          <i class="fas fa-sign-in-alt me-2"></i>Login
+        </a>
+      <% } else { %>
+        <a href="/shopping" class="btn btn-light btn-lg px-4">
+          <i class="fas fa-globe-americas me-2"></i>Browse Destinations
+        </a>
+      <% } %>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-md-start">
+          <h5><i class="fas fa-plane me-2"></i>Travel Agency</h5>
+          <p>Making your travel dreams come true since 2025</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <hr class="mt-3 mb-3 bg-light">
+      <p class="mb-0">© 2025 Travel Agency. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

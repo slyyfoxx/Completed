@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <%- include('partials/style') %>
+    </head>
+    <body>
+    <header><h1>Dashboard</h1></header>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="/packages">Packages</a>
+            <a href="/logout">Logout</a>
+        </div>
+        <div class="nav-right">Welcome, <%= user.name %></div>
+    </nav>
+    <div class="container">
+        <h2>Your Dashboard</h2>
+        <p>Welcome to the travel management system.</p>
+    </div>
+    <footer>© 2025 Travel App</footer>
+</body>
+</html>

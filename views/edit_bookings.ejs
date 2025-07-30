@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Booking</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Edit Booking #<%= booking.id %></h2>
+    
+    <form action="/bookings/edit/<%= booking.id %>" method="POST">
+      <label>Customer:</label><br>
+      <select name="customer_id" required>
+        <option value="">Select a customer</option>
+        <% customers.forEach(customer => { %>
+          <option value="<%= customer.id %>" <%= customer.id == booking.customer_id ? 'selected' : '' %>>
+            <%= customer.name %>
+          </option>
+        <% }) %>
+      </select><br><br>
+      
+      <label>Package:</label><br>
+      <select name="package_id" required>
+        <option value="">Select a package</option>
+        <% packages.forEach(pkg => { %>
+          <option value="<%= pkg.id %>" <%= pkg.id == booking.package_id ? 'selected' : '' %>>
+            <%= pkg.name %> - $<%= pkg.price %>
+          </option>
+        <% }) %>
+      </select><br><br>
+      
+      <label>Booking Date:</label><br>
+      <input type="date" name="booking_date" value="<%= booking.booking_date.toISOString().split('T')[0] %>" required><br><br>
+      
+      <label>Status:</label><br>
+      <select name="status">
+        <option value="pending" <%= booking.status === 'pending' ? 'selected' : '' %>>Pending</option>
+        <option value="confirmed" <%= booking.status === 'confirmed' ? 'selected' : '' %>>Confirmed</option>
+        <option value="cancelled" <%= booking.status === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+      </select><br><br>
+      
+      <button type="submit">Update Booking</button>
+    </form>
+    
+    <br>
+    <a href="/bookings">← Back to Bookings</a>
+  </div>
+    <footer>© 2025 Travel App</footer>
+</body>
+</html>

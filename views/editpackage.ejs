@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Package</title>
+    <%- include('partials/style') %>
+</head>
+<body>
+    <header><h1>Edit Travel Package</h1></header>
+
+    <div class="container">
+        <% messages.forEach(function(msg) { %>
+            <div class="alert alert-danger"><%= msg %></div>
+        <% }) %>
+
+        <form method="POST" action="/packages/edit/<%= package.id %>">
+            <label>Name</label>
+            <input type="text" name="name" value="<%= package.name %>" required>
+
+            <label>Description</label>
+            <textarea name="description"><%= package.description %></textarea>
+
+            <label>Price</label>
+            <input type="number" name="price" value="<%= package.price %>" step="0.01" required>
+
+            <label>Duration</label>
+            <input type="text" name="duration" value="<%= package.duration %>" required>
+
+            <button type="submit">Update Package</button>
+        </form>
+    </div>
+
+    <footer>© 2025 Travel App</footer>
+</body>
+</html>

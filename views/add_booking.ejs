@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Booking</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Add New Booking</h2>
+    
+    <form action="/bookings/add" method="POST">
+      <label>Customer:</label><br>
+      <select name="customer_id" required>
+        <option value="">Select a customer</option>
+        <% customers.forEach(customer => { %>
+          <option value="<%= customer.id %>"><%= customer.name %></option>
+        <% }) %>
+      </select><br><br>
+      
+      <label>Package:</label><br>
+      <select name="package_id" required>
+        <option value="">Select a package</option>
+        <% packages.forEach(pkg => { %>
+          <option value="<%= pkg.id %>"><%= pkg.name %> - $<%= pkg.price %></option>
+        <% }) %>
+      </select><br><br>
+      
+      <label>Booking Date:</label><br>
+      <input type="date" name="booking_date" required><br><br>
+      
+      <label>Status:</label><br>
+      <select name="status">
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="cancelled">Cancelled</option>
+      </select><br><br>
+      
+      <button type="submit">Add Booking</button>
+    </form>
+    
+    <br>
+    <a href="/bookings">← Back to Bookings</a>
+  </div>
+    <footer>© 2025 Travel App</footer>
+</body>
+</html>

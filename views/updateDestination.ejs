@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome to Travel Agency</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Travel Agency</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <% if (user) { %>
+          <!-- Visible to all logged-in users -->
+          <li class="nav-item">
+            <a class="nav-link" href="/packages">Packages</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/destinations">Destinations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/customers">Customers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/bookings">Bookings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/payments">Payments</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/reviews">Reviews</a>
+          </li>
+
+
+          <!-- Logout link for all logged in users -->
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+
+        <% } else { %>
+          <!-- For guests -->
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+        <% } %>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Main content -->
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Update Destination</h2>
+    
+    <% if (destination) { %>
+      <form action="/updateDestination/<%= destination.id %>" method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 500px;">
+
+
+  
+        
+        <div class="mb-3">
+          <label for="country" class="form-label">Country Name</label>
+          <input type="text" class="form-control" id="country" name="country" value="<%= destination.country %>" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="city" class="form-label">City Name</label>
+          <input type="text" class="form-control" id="city" name="city" value="<%= destination.city %>" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="attractions" class="form-label">Attractions</label>
+          <input type="text" class="form-control" id="attractions" name="attractions" value="<%= destination.attractions %>" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Current Image</label>
+          <input type="text" class="form-control" name="currentImage" value="<%= destination.image %>" readonly>
+          <img src="/images/<%= destination.image %>" class="img-thumbnail mt-2" style="width: 150px;">
+        </div>
+
+        <div class="mb-4">
+          <label for="image" class="form-label">Upload New Image</label>
+          <input class="form-control" type="file" id="image" name="image" accept="image/*">
+        </div>
+
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary">Update Destination</button>
+          <a href="/list" class="btn btn-secondary">Back to List</a>
+        </div>
+      </form>
+    <% } else { %>
+      <p class="text-center">No destination found.</p>
+    <% } %>
+  </div>
+    <footer>© 2025 Travel App</footer>
+</body>
+</html>

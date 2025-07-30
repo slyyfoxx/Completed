@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bookings</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>My Bookings</h2>
+
+    <!-- Search (Admin Only) -->
+    <% if (user.role === 'admin') { %>
+      <form action="/bookings/search" method="GET" style="margin-bottom: 20px;">
+        <input type="text" name="customer" placeholder="Search by customer name">
+        <input type="date" name="date">
+        <button type="submit">Search</button>
+        <a href="/bookings">Clear</a>
+      </form>
+    <% } %>
+
+    <!-- Bookings Table -->
+    <% if (bookings.length === 0) { %>
+      <p>No bookings found.</p>
+    <% } else { %>
+      <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Package</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% bookings.forEach(booking => { %>
+            <tr>
+              <td><%= booking.id %></td>
+              <td><%= booking.customer_name || 'N/A' %></td>
+              <td><%= booking.package_name %></td>
+              <td><%= booking.booking_date.toISOString().split('T')[0] %></td>
+              <td><%= booking.status %></td>
+              <td>
+                <% if (user.role === 'admin') { %>
+                  <a href="/bookings/edit/<%= booking.id %>">Edit</a> |
+                  <form action="/bookings/delete/<%= booking.id %>" method="POST" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Delete?')">Delete</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    <br>
+    <a href="/">← Home</a>
+  </div>
+</body>
+</html>

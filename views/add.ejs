@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Customer</title>
+    <script>
+        function validateForm() {
+            const name = document.forms["customerForm"]["name"].value.trim();
+            const email = document.forms["customerForm"]["email"].value.trim();
+            const phone = document.forms["customerForm"]["phone"].value.trim();
+
+            if (name === "" || email === "") {
+                alert("Name and Email are required.");
+                return false;
+            }
+
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!email.match(emailPattern)) {
+                alert("Invalid email format.");
+                return false;
+            }
+
+            if (phone.length > 0 && phone.length < 8) {
+                alert("Phone number must be at least 8 digits.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>Add New Customer</h1>
+
+    <form action="/customers/add" method="POST">
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br>
+
+        <label>Phone:</label><br>
+        <input type="text" name="phone"><br><br>
+
+        <button type="submit">Add</button>
+        <a href="/customers">Cancel</a>
+    </form>
+    <footer>© 2025 Travel App</footer>
+</body>
+</html>

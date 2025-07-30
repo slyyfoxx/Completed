@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Package Reviews</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #FCF8DD;
+        }
+        
+        .review-card {
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background-color: white;
+        }
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 15px 20px;
+            border-bottom: none;
+        }
+        .rating-stars {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+        .review-body {
+            padding: 20px;
+            background-color: white;
+        }
+        .author-text {
+            font-style: italic;
+            color: #6c757d;
+            border-top: 1px dashed #dee2e6;
+            padding-top: 10px;
+            margin-top: 15px;
+        }
+        .search-container {
+            background-color: #00809D;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        .btn-add {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+        }
+        .empty-state {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date-text {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar Start -->
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Travel Agency</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <% if (user) { %>
+          <!-- Visible to all logged-in users -->
+          <li class="nav-item">
+            <a class="nav-link" href="/packages">Packages</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/destinations">Destinations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/customers">Customers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/bookings">Bookings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/payments">Payments</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/reviews">Reviews</a>
+          </li>
+
+
+          <!-- Logout link for all logged in users -->
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+
+        <% } else { %>
+          <!-- For guests -->
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+        <% } %>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+</nav>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-gradient">Travel Package Reviews</h1>
+            <p class="lead text-muted">Discover what our customers say about our packages</p>
+        </div>
+
+        <!-- Search Container -->
+        <div class="search-container">
+            <form action="/reviews" method="GET">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-5">
+                        <label for="package" class="form-label">Search Packages</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <input type="text" class="form-control" id="package" name="package" placeholder="e.g. Premium Package" value="<%= query.package || '' %>">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="rating" class="form-label">Filter by Rating</label>
+                        <select class="form-select" id="rating" name="rating">
+                            <option value="">All Ratings</option>
+                            <option value="5" <%= query.rating === '5' ? 'selected' : '' %>>5 Stars</option>
+                            <option value="4" <%= query.rating === '4' ? 'selected' : '' %>>4 Stars</option>
+                            <option value="3" <%= query.rating === '3' ? 'selected' : '' %>>3 Stars</option>
+                            <option value="2" <%= query.rating === '2' ? 'selected' : '' %>>2 Stars</option>
+                            <option value="1" <%= query.rating === '1' ? 'selected' : '' %>>1 Star</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-filter me-2"></i> Filter
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <% if (isAdmin) { %>
+            <div class="d-flex justify-content-end mb-4">
+                <a href="/reviews/add" class="btn btn-add text-white">
+                    <i class="fas fa-plus me-2"></i> Add New Review
+                </a>
+            </div>
+        <% } %>
+
+        <!-- Reviews Container -->
+        <% if (reviews.length > 0) { %>
+            <div class="row">
+                <% reviews.forEach(review => { %>
+                    <div class="col-lg-6">
+                        <div class="review-card card">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0"><%= review.package_name %></h5>
+                                    <div class="rating-stars">
+                                        <% for (let i = 0; i < review.rating; i++) { %>
+                                            <i class="fas fa-star text-warning"></i>
+                                        <% } %>
+                                        <% for (let i = review.rating; i < 5; i++) { %>
+                                            <i class="far fa-star text-warning"></i>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="review-body card-body">
+                                <p class="card-text"><%= review.comment %></p>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="author-text mb-0">
+                                        <i class="fas fa-user me-2"></i><%= review.customer_name %>
+                                    </p>
+                                    <p class="date-text mb-0">
+                                        <i class="far fa-calendar-alt me-1"></i>
+                                        <%= new Date(review.created_at).toLocaleDateString() %>
+                                    </p>
+                                </div>
+                                
+                                <% if (isAdmin) { %>
+                                    <div class="d-flex justify-content-end gap-2 mt-3">
+                                        <a href="/reviews/edit/<%= review.id %>" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit me-1"></i> Edit
+                                        </a>
+                                        <form action="/reviews/delete/<%= review.id %>" method="POST" class="delete-form">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash me-1"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="empty-state">
+                <i class="fas fa-comment-slash fa-3x text-muted mb-3"></i>
+                <h3 class="h4">No reviews found</h3>
+                <p class="text-muted">There are no reviews matching your criteria.</p>
+                <% if (isAdmin) { %>
+                    <a href="/reviews/add" class="btn btn-primary mt-3">
+                        <i class="fas fa-plus me-2"></i> Add First Review
+                    </a>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Delete confirmation
+        document.querySelectorAll('.delete-form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                if (!confirm('Are you sure you want to delete this review?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+    <footer>© 2025 Travel App</footer>
+</body>
+</html>

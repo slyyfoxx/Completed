@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Package</title>
+    <%- include('partials/style') %>
+</head>
+<body>
+    <header><h1>Add New Travel Package</h1></header>
+
+    <div class="container">
+        <% messages.forEach(function(msg) { %>
+            <div class="alert alert-danger"><%= msg %></div>
+        <% }) %>
+
+        <form method="POST" action="/packages/add">
+            <label>Name</label>
+            <input type="text" name="name" required>
+
+            <label>Description</label>
+            <textarea name="description"></textarea>
+
+            <label>Price</label>
+            <input type="number" name="price" step="0.01" required>
+
+            <label>Duration</label>
+            <input type="text" name="duration" required>
+
+            <button type="submit">Add Package</button>
+        </form>
+    </div>
+
+    <footer>© 2025 Travel App</footer>
+    </body>
+    </html>
