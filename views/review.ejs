@@ -99,9 +99,11 @@
             <li class="nav-item">
               <a class="nav-link" href="/destinations"><i class="fas fa-map-marked-alt me-1"></i> Destinations</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/customers"><i class="fas fa-users me-1"></i> Customers</a>
-            </li>
+            <% if (user.role === 'admin') { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/customers"><i class="fas fa-users me-1"></i> Customers</a>
+              </li>
+            <% } %>
             <li class="nav-item">
               <a class="nav-link" href="/bookings"><i class="fas fa-calendar-check me-1"></i> Bookings</a>
             </li>
@@ -169,7 +171,7 @@
             </form>
         </div>
 
-        <% if (isAdmin) { %>
+        <% if (user && user.role === 'admin') { %>
             <div class="d-flex justify-content-end mb-4">
                 <a href="/reviews/add" class="btn btn-add text-white">
                     <i class="fas fa-plus me-2"></i> Add New Review
@@ -209,7 +211,7 @@
                                     </p>
                                 </div>
                                 
-                                <% if (isAdmin) { %>
+                                <% if (user && user.role === 'admin') { %>
                                     <div class="d-flex justify-content-end gap-2 mt-3">
                                         <a href="/reviews/edit/<%= review.id %>" class="btn btn-sm btn-outline-primary">
                                             <i class="fas fa-edit me-1"></i> Edit
@@ -231,7 +233,7 @@
                 <i class="fas fa-comment-slash fa-3x text-muted mb-3"></i>
                 <h3 class="h4">No reviews found</h3>
                 <p class="text-muted">There are no reviews matching your criteria.</p>
-                <% if (isAdmin) { %>
+                <% if (user && user.role === 'admin') { %>
                     <a href="/reviews/add" class="btn btn-primary mt-3">
                         <i class="fas fa-plus me-2"></i> Add First Review
                     </a>
